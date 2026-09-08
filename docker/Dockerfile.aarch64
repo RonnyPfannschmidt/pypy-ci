@@ -44,13 +44,13 @@ ADD install_openssl.sh /root/install_openssl.sh
 RUN sh /root/install_openssl.sh 2>&1 | tee /root/install_openssl.log
 
 # get a pypy for translation and running tests
-RUN wget -q https://downloads.python.org/pypy/pypy2.7-v7.3.22-aarch64.tar.bz2 -O pypy2.7.tar.bz2
-RUN echo "49829ef97a36d50870b0a4a7d6d67c4817d98a0bbd936e7a86ac6ef615b07205  pypy2.7.tar.bz2" | sha256sum -c -
+RUN wget -q https://downloads.python.org/pypy/pypy2.7-v7.3.23-aarch64.tar.bz2 -O pypy2.7.tar.bz2
+RUN echo "b0bec20c16b6ab2bd46bd4f5d6049b6070a22a53eaed437ee9ac36d842ceda74  pypy2.7.tar.bz2" | sha256sum -c -
 RUN tar -C /opt -xj < pypy2.7.tar.bz2 && rm pypy2.7.tar.bz2
-RUN chmod -R a+r /opt/pypy2.7-v7.3.22-aarch64
-RUN chmod -R a+x /opt/pypy2.7-v7.3.22-aarch64/lib
-RUN ln -s /opt/pypy2.7-v7.3.22-aarch64/bin/pypy /usr/local/bin/pypy
-RUN ln -s /opt/pypy2.7-v7.3.22-aarch64/bin/pypy /usr/local/bin/python
+RUN chmod -R a+r /opt/pypy2.7-v7.3.23-aarch64
+RUN chmod -R a+x /opt/pypy2.7-v7.3.23-aarch64/lib
+RUN ln -s /opt/pypy2.7-v7.3.23-aarch64/bin/pypy /usr/local/bin/pypy
+RUN ln -s /opt/pypy2.7-v7.3.23-aarch64/bin/pypy /usr/local/bin/python
 RUN pypy -mensurepip
 RUN pypy -mpip install --upgrade pip==20.3.4
 RUN pypy -mpip install --upgrade setuptools wheel
