@@ -29,7 +29,7 @@ RUN yum clean packages
 # prefer our libraries in /usr/local/lib (for sqlite, libexpat, libffi built from source)
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 
-# sqlite: yum provides 3.26.0 which is too old; build 3.47.2 from source
+# sqlite: yum provides 3.26.0 which is too old; build 3.53.4 from source
 ADD install_sqlite.sh /root/install_sqlite.sh
 RUN sh /root/install_sqlite.sh 2>&1 | tee /root/install_sqlite.log
 
@@ -44,14 +44,8 @@ ADD install_openssl.sh /root/install_openssl.sh
 RUN sh /root/install_openssl.sh 2>&1 | tee /root/install_openssl.log
 
 # get a pypy for translation and running tests
-RUN wget -q https://downloads.python.org/pypy/pypy2.7-v7.3.23-linux64.tar.bz2 -O pypy2.7.tar.bz2
-RUN echo "7833be48244a6f4aa0720c6b98f151428291a52697da849ef6b3ca7d5bf45b96  pypy2.7.tar.bz2" | sha256sum -c -
-RUN tar -C /opt -xj < pypy2.7.tar.bz2 && rm pypy2.7.tar.bz2
-RUN ln -s /opt/pypy2.7-v7.3.23-linux64/bin/pypy /usr/local/bin/pypy
-RUN ln -s /opt/pypy2.7-v7.3.23-linux64/bin/pypy /usr/local/bin/python
-RUN pypy -mensurepip
-RUN pypy -mpip install --upgrade pip==20.3.4
-RUN pypy -mpip install --upgrade setuptools wheel
+ADD install_pypy.sh /root/install_pypy.sh
+RUN sh /root/install_pypy.sh linux64 2>&1 | tee /root/install_pypy.log
 ADD requirements.txt /root/requirements.txt
 RUN pypy -mpip install --require-hashes -r /root/requirements.txt
 

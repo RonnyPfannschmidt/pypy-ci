@@ -1,8 +1,8 @@
 #!/bin/bash
 set -xeo pipefail
 
-EXPAT_VERSION="2.8.1"
-EXPAT_SHA256="a52eb72108be160e190b5cafa5bba8663f1313f2013e26060d1c18e26e31067b"
+EXPAT_VERSION="2.8.4"
+EXPAT_SHA256="b8ece2437692dad44d851c4532723390a5a330990007706be9c8d2b90d294f36"
 
 curl -sS -L "https://github.com/libexpat/libexpat/releases/download/R_${EXPAT_VERSION//./_}/expat-${EXPAT_VERSION}.tar.gz" \
     -o expat-${EXPAT_VERSION}.tar.gz
