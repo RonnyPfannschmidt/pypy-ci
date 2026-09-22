@@ -1,8 +1,9 @@
 #!/bin/bash
 set -xeo pipefail
 
-SQLITE_SHA3=52cd4a2304b627abbabe1a438ba853d0f6edb8e2774fcb5773c7af11077afe94
-SQLITE_VERSION="3470200"
+SQLITE_SHA3=454e45f61c6bd75b7420e7190732dea03ce6639c63ada47bbc592f67fc340338
+SQLITE_VERSION="3530400"
+SQLITE_YEAR="2026"
 
 function check_sha3 {
     local fname=$1
@@ -14,12 +15,14 @@ function check_sha3 {
     fi
 }
 
-curl -sS -#O "https://sqlite.org/2024/sqlite-autoconf-${SQLITE_VERSION}.tar.gz"
+curl -sS -#O "https://sqlite.org/${SQLITE_YEAR}/sqlite-autoconf-${SQLITE_VERSION}.tar.gz"
 check_sha3 "sqlite-autoconf-${SQLITE_VERSION}.tar.gz" ${SQLITE_SHA3}
 tar zxf sqlite*.tar.gz
 pushd sqlite-autoconf-${SQLITE_VERSION}
 CFLAGS="-Os -fPIC -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_RTREE -DSQLITE_TCL=0"
-CONFIGURE_PRE="--prefix=/usr/local --enable-threadsafe --enable-shared=yes --enable-static=yes --disable-readline --disable-dependency-tracking"
+# sqlite >= 3.49 uses autosetup, not autoconf: shared, static and threadsafe are
+# on by default and the old --enable-* / --disable-dependency-tracking flags are rejected
+CONFIGURE_PRE="--prefix=/usr/local --disable-readline"
 if [ "$1" == "m32" ]; then
   setarch i386 ./configure ${CONFIGURE_PRE} CFLAGS="-m32 ${CFLAGS}"
 else

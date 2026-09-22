@@ -1,9 +1,9 @@
 #!/bin/bash
 set -xeo pipefail
 
-OPENSSL_URL="https://github.com/openssl/openssl/releases/download/openssl-3.0.21"
-OPENSSL_NAME="openssl-3.0.21"
-OPENSSL_SHA256="617e29af8e421f46649484a4937e48c685e47f46488167c982f88bc4ec1d522f"
+OPENSSL_URL="https://github.com/openssl/openssl/releases/download/openssl-3.0.22"
+OPENSSL_NAME="openssl-3.0.22"
+OPENSSL_SHA256="67ebca7e50d17383028045486653492195b83db95f8558709701bb47b5c1ef81"
 
 function check_sha256sum {
     local fname=$1

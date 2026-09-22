@@ -20,10 +20,9 @@ under `docker/` change.
   the RPython test suite (`pypy -mpytest ...`).
 - **pytest, hypothesis, mercurial, pexpect, vmprof, automat** — test dependencies,
   installed into PyPy with pinned hashes (`docker/requirements.txt`).
-- **sqlite 3.47.x, libexpat 2.8.x, libffi 3.5.x** — built from source at specific
-  versions because they are baked into the PyPy binary at translation time.
-- **openssl3, gc, ncurses, libunwind, bzip2** — installed via yum from the AlmaLinux 8
-  repos.
+- **sqlite 3.53.x, libexpat 2.8.x, libffi 3.5.x, openssl 3.0.x** — built from source
+  at specific versions because they are baked into the PyPy binary at translation time.
+- **gc, ncurses, libunwind, bzip2** — installed via yum from the AlmaLinux 8 repos.
 
 ### Build locally
 
@@ -41,8 +40,8 @@ docker run -it --rm -v /path/to/pypy:/build_dir buildworker_x86_64 /bin/bash
 
 ### Updating dependencies
 
-**PyPy version** — update the URL and `sha256sum` check in `docker/Dockerfile`.
-Checksums are at <https://pypy.org/checksums>.
+**PyPy version** — update `PYPY_VERSION` and the three per-arch `PYPY_SHA256` values
+in `docker/install_pypy.sh`. Checksums are at <https://pypy.org/checksums>.
 
 **libexpat / libffi** — update the version and `EXPAT_SHA256` / `LIBFFI_SHA256`
 variables in `docker/install_libexpat.sh` / `docker/install_libffi.sh`.
